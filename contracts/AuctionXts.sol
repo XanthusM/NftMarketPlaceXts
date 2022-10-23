@@ -53,10 +53,10 @@ contract Auction is NFtMarketplaceXts, NftXts {
         );
     }
 
-    function makeBid(tokenId, value) {
+    //function makeBid(tokenId, value) {
 
 
-    }
+    //}
 
     function finishAuction(uint _auctionItemId) external {
         auctionItem storage auctionitem = auctionItems[_auctionItemId];

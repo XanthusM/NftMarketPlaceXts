@@ -81,11 +81,11 @@ contract NFtMarketplaceXts is ReentrancyGuard, NftXts {
     function buyItem(uint _itemId) external payable nonReentrant {
         Item storage item = items[_itemId];
         require(_itemId > 0 && _itemId <= itemCount, "item doesn't exist");
-        require(msg.value >= item.price + ((item.price/100) * _feePercent), "not enough ether to cover item price and market fee");
+        require(msg.value >= item.price + ((item.price/100) * feePercent), "not enough ether to cover item price and market fee");
         require(!item.sold, "item already sold");
         // pay seller and feeAccount
         item.seller.transfer(item.price);
-        feeAccount.transfer((item.price/100) * _feePercent);
+        feeAccount.transfer((item.price/100) * feePercent);
         // update item to sold
         item.sold = true;
         // transfer nft to buyer
@@ -101,17 +101,18 @@ contract NFtMarketplaceXts is ReentrancyGuard, NftXts {
         );
     }
 
-    function cancelItem(IERC721 _nft, uint _tokenId) external nonReentrant {
+    function cancelItem(uint _itemId) external nonReentrant {
+        Item storage item = items[_itemId];
         // decrease itemCount
         itemCount = itemCount - 1;
         // transfer nft
-        _nft.transferFrom(address(this), msg.sender, _tokenId);
+        item.nft.transferFrom(address(this), msg.sender, item.tokenId);
         item.sold = true;
         // emit itemCanceled event
         emit itemCanceled(
             itemCount,
-            address(_nft),
-            _tokenId,
+            address(item.nft),
+            item.tokenId,
             msg.sender
         );
     }
