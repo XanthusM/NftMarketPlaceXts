@@ -5,10 +5,8 @@ import "./Auction.sol";
 contract AuctionFactory {
     Auction[] private _auctions;
     function createAuction(
-        string memory name
     ) public {
         Auction auction = new Auction(
-            name,
             msg.sender
         );
         _auctions.push(auction);
