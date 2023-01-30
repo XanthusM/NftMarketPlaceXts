@@ -30,7 +30,6 @@ contract Auction {
     address public highestBidder;
     mapping(address => uint) public bids;
 
-    string public name;
     address public _owner;
 
     constructor(
