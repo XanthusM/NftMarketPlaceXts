@@ -34,10 +34,8 @@ contract Auction {
     address public _owner;
 
     constructor(
-        string memory _name,
         address _owner
     ) public {
-        name = _name;
         _owner = msg.sender;
     }
 
