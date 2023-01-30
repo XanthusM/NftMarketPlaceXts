@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: NONE
+// SPDX-License-Identifier: MIT
 pragma solidity 0.8.10;
 
 interface IERC721 {
@@ -30,8 +30,15 @@ contract Auction {
     address public highestBidder;
     mapping(address => uint) public bids;
 
-    constructor () {
-        seller = payable(msg.sender);
+    string public name;
+    address public _owner;
+
+    constructor(
+        string memory _name,
+        address _owner
+    ) public {
+        name = _name;
+        _owner = msg.sender;
     }
 
     function start(IERC721 _nft, uint _nftId, uint startingBid) external {
